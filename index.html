@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dip · Roche Campus Vienna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0B41CF; --blue-dark:#062B8A; --blue-tint:#F3F6FE;
+    --brick:#C24B26; --brick-dark:#A93D1C;
+    --ink:#1A1C22; --grey:#5F6672; --faint:#8A919E; --hair:#E4E7EE;
+    --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#fff}
+  body{font-family:var(--font);color:var(--ink);padding:clamp(16px,2.6vw,36px) clamp(16px,4vw,56px) clamp(28px,4vw,56px);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto}
+  .topline{display:flex;justify-content:flex-end;padding-bottom:6px}
+  .who{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--faint)}
+  h1{font-weight:800;font-size:clamp(28px,4.4vw,50px);line-height:1.06;letter-spacing:-0.02em;padding:clamp(6px,1vw,12px) 0 clamp(16px,2vw,22px)}
+  h1 .de{color:var(--blue)}
+
+  details.eq{background:var(--blue-tint);border:1px solid #DCE5FA;border-radius:14px;margin-bottom:14px}
+  details.eq summary{cursor:pointer;list-style:none;padding:14px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;font-weight:600;color:var(--grey)}
+  details.eq summary::-webkit-details-marker{display:none}
+  details.eq summary .tri{transition:transform .2s;font-size:10px;color:var(--blue)}
+  details.eq[open] summary .tri{transform:rotate(90deg)}
+  details.eq summary b{color:var(--blue);font-weight:800;font-variant-numeric:tabular-nums;font-size:15px}
+  .eq-body{padding:2px 18px 18px}
+  .eq-row{display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);flex-wrap:wrap;row-gap:14px}
+  .eq-item{display:flex;flex-direction:column;gap:3px}
+  .eq-op{font-weight:700;font-size:clamp(18px,2vw,24px);color:var(--blue);padding:0 2px;align-self:flex-start;margin-top:6px}
+  .eq-input{display:flex;align-items:baseline;gap:5px;border-bottom:2px solid #BFCFF6;padding-bottom:2px;transition:border-color .2s}
+  .eq-input:focus-within{border-color:var(--blue)}
+  .eq-input input{
+    border:0;outline:0;background:transparent;font-family:var(--font);font-weight:800;color:var(--ink);
+    font-size:clamp(20px,2.3vw,28px);font-variant-numeric:tabular-nums;
+    -moz-appearance:textfield;appearance:textfield;
+  }
+  .eq-input input::-webkit-outer-spin-button,.eq-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  #inScope{width:4.2ch} #inVal{width:5.6ch}
+  .eq-input .unit{font-size:12px;font-weight:600;color:var(--grey);white-space:nowrap}
+  .eq-result{font-weight:800;color:var(--blue);font-size:clamp(20px,2.3vw,28px);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .eq-result .unit{font-size:12px;font-weight:600;color:var(--grey);margin-left:5px}
+  .eq-cap{font-size:11px;color:var(--faint);line-height:1.4;max-width:230px}
+  .eq-note{margin-top:14px;font-size:11.5px;color:var(--faint);line-height:1.5}
+
+  .seg{display:flex;gap:8px;margin-bottom:14px;border:1px solid var(--hair);border-radius:14px;padding:6px;background:#FAFBFD}
+  .seg button{flex:1;border:0;border-radius:9px;cursor:pointer;background:transparent;color:var(--grey);font-family:var(--font);font-weight:800;font-size:clamp(15px,1.7vw,19px);letter-spacing:.01em;padding:16px 10px;transition:all .2s}
+  .seg button:hover{color:var(--ink)}
+  .seg button.act-bad{background:var(--brick);color:#fff}
+  .seg button.act-good{background:var(--blue);color:#fff}
+
+  .panel{border:1px solid var(--hair);border-radius:14px;padding:clamp(16px,2.4vw,28px)}
+  .hero-label{font-size:13px;font-weight:700;letter-spacing:.03em;color:var(--grey)}
+  .hero-num{font-weight:800;font-size:clamp(38px,5.6vw,74px);line-height:1.08;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .35s}
+  body.mode-bad .hero-num{color:var(--brick-dark)}
+  body.mode-good .hero-num{color:var(--blue)}
+  .hero-sub{margin-top:5px;font-size:13px;color:var(--grey);max-width:880px;line-height:1.55}
+  .hero-sub b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+
+  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+  .chip{border:1px solid var(--hair);border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--grey);font-variant-numeric:tabular-nums;background:#FAFBFD;display:flex;align-items:center;gap:8px}
+  .chip .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .chip b{font-weight:700}
+  .chip.ember b{color:var(--brick-dark)}
+  .chip.blue b{color:var(--blue)}
+  .chip.plain b{color:var(--ink)}
+
+  .chartbox{margin-top:16px;position:relative}
+  svg{display:block;width:100%;height:auto}
+  .axis-text{font-family:var(--font);font-size:11px;fill:var(--faint)}
+  .axis-text.em{fill:var(--grey);font-weight:600}
+  .axis-eur{font-family:var(--font);font-size:9.5px;fill:#9FB1E8;font-variant-numeric:tabular-nums}
+  .curve-tag{font-family:var(--font);font-size:12.5px;font-weight:700}
+  .inchart-big{font-family:var(--font);font-size:38px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+  .inchart-sub{font-family:var(--font);font-size:12px;font-weight:700}
+  .trough-lbl{font-family:var(--font);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+  .axis-note{margin-top:8px;font-size:12px;color:var(--faint);line-height:1.5}
+  .axis-note b{color:var(--grey);font-weight:700;font-variant-numeric:tabular-nums}
+
+  .tooltip{
+    position:absolute;top:10px;left:0;display:none;pointer-events:none;
+    background:#fff;border:1px solid var(--hair);border-radius:10px;
+    box-shadow:0 4px 18px rgba(20,30,60,.10);
+    padding:10px 12px;font-size:12px;line-height:1.6;color:var(--grey);min-width:215px;z-index:5;
+  }
+  .tooltip .tt-month{font-weight:800;color:var(--ink);font-size:12.5px;margin-bottom:3px}
+  .tooltip .row{display:flex;align-items:center;gap:7px;white-space:nowrap}
+  .tooltip .row .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .tooltip b{font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .tooltip .row.delta{border-top:1px solid var(--hair);margin-top:4px;padding-top:4px}
+
+  details.src{margin-top:16px;border:1px solid var(--hair);border-radius:14px;background:#FAFBFD}
+  details.src summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;font-size:13px;color:var(--grey);display:flex;align-items:center;gap:10px}
+  details.src summary::-webkit-details-marker{display:none}
+  details.src summary .tri{transition:transform .2s;font-size:10px;color:var(--faint)}
+  details.src[open] summary .tri{transform:rotate(90deg)}
+  .src-body{padding:2px 20px 18px;font-size:12.5px;line-height:1.7;color:var(--grey)}
+  .src-body h3{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:14px 0 6px}
+  .src-body ol{margin-left:18px}
+  .src-body li{margin-bottom:6px}
+  .src-body p{margin-bottom:8px}
+  .src-body b{color:var(--ink);font-weight:700}
+  .endnote{margin-top:12px;font-size:11.5px;color:var(--faint)}
+  @media (max-width:680px){.hero-num{white-space:normal}}
+</style>
+</head>
+<body class="mode-bad">
+<div class="wrap">
+
+  <div class="topline"><div class="who">disruptive.wtf</div></div>
+
+  <h1>Every move has a dip.<br><span class="de">The dip</span> decides what the move is worth.</h1>
+
+  <!-- ============ collapsible calculation, Austrian numbers ============ -->
+  <details class="eq" id="eqBox">
+    <summary>
+      <span class="tri">&#9654;</span>
+      <span>The number behind everything:</span>
+      <b><span id="sumYear">···</span></b>
+      <span>per year carried by the <b id="sumScope">463</b> colleagues in Vienna · open to see and edit</span>
+    </summary>
+    <div class="eq-body">
+      <div class="eq-row">
+        <div class="eq-item">
+          <span class="eq-input"><input id="inVal" type="number" inputmode="decimal" min="0" step="1" value="274.7"><span class="unit">€ M / year</span></span>
+          <span class="eq-cap">value carried by Roche's people in Austria. Estimate, see note below. Replace with the internal figure any time.</span>
+        </div>
+        <div class="eq-op">&#247;</div>
+        <div class="eq-item">
+          <span class="eq-input"><input id="inScope" type="number" inputmode="numeric" min="1" step="1" value="463"><span class="unit">colleagues</span></span>
+          <span class="eq-cap">moving to Engelhorngasse (Roche RFP). In effect all of Roche Austria: Roche states rund 400 in Austria (roche.at) and rund 500 in Vienna (PHARMIG profile, 2024).</span>
+        </div>
+        <div class="eq-op">=</div>
+        <div class="eq-item">
+          <span class="eq-result"><span id="outPerEmp">···</span><span class="unit">per colleague / year</span></span>
+          <span class="eq-cap">value each colleague carries on average</span>
+        </div>
+        <div class="eq-op">=</div>
+        <div class="eq-item">
+          <span class="eq-result"><span id="outMonth">···</span><span class="unit">€ M / month at 100%</span></span>
+          <span class="eq-cap">one normal month, today's performance</span>
+        </div>
+      </div>
+      <div class="eq-note"><b>Why the € 274,7 M is an estimate:</b> Roche's Austrian companies publish only abbreviated accounts, so no Austrian revenue figure is public. The prefill is 463 colleagues &times; &euro; 593.200, the Group's average revenue per employee in FY 2025 (&euro; 66,9 bn &divide; 112.774 employees, Roche Annual Report 2025; &euro; conversion per Austrian press agency APA / trend). Type Roche Austria's real number into the field and everything recalculates.</div>
+    </div>
+  </details>
+
+  <!-- ============ scenario buttons ============ -->
+  <div class="seg" role="group" aria-label="Choose scenario">
+    <button id="btnBad" type="button" class="act-bad">Unmanaged</button>
+    <button id="btnGood" type="button">Engaged</button>
+  </div>
+
+  <!-- ============ result panel ============ -->
+  <div class="panel">
+    <div class="hero-label" id="heroLabel">The unmanaged dip costs</div>
+    <div class="hero-num"><span id="heroVal">···</span></div>
+    <div class="hero-sub" id="heroSub"></div>
+
+    <div class="chips">
+      <div class="chip ember"><span class="dot" style="background:var(--brick)"></span>unmanaged&nbsp;<b id="chipBad">···</b>&nbsp;added up over 36 months</div>
+      <div class="chip blue"><span class="dot" style="background:var(--blue)"></span>engaged&nbsp;<b id="chipGood">···</b>&nbsp;vs today, added up over 36 months</div>
+      <div class="chip plain"><span class="dot" style="background:var(--ink)"></span>difference&nbsp;<b id="chipHead">···</b>&nbsp;per colleague, over 36 months</div>
+    </div>
+
+    <div class="chartbox" id="chartbox">
+      <svg id="chart" viewBox="0 0 1000 440" preserveAspectRatio="xMidYMid meet" aria-label="Monthly output after move-in: unmanaged versus engaged change. Hover for monthly detail.">
+        <defs>
+          <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0B41CF" stop-opacity="0.20"/>
+            <stop offset="100%" stop-color="#0B41CF" stop-opacity="0.05"/>
+          </linearGradient>
+          <linearGradient id="gEmber" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C24B26" stop-opacity="0.04"/>
+            <stop offset="100%" stop-color="#C24B26" stop-opacity="0.22"/>
+          </linearGradient>
+        </defs>
+        <g id="gGrid"></g>
+        <path id="areaActive"></path>
+        <g id="gMove"></g>
+        <path id="ghostBad" fill="none" stroke="#C24B26" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"></path>
+        <path id="ghostGood" fill="none" stroke="#0B41CF" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"></path>
+        <path id="actBad" fill="none" stroke="#C24B26" stroke-width="4.6" stroke-linecap="round"></path>
+        <path id="actGood" fill="none" stroke="#0B41CF" stroke-width="4.6" stroke-linecap="round"></path>
+        <g id="gTags">
+          <text id="tagBad" class="curve-tag" fill="#A93D1C" text-anchor="start">unmanaged</text>
+          <text id="tagGood" class="curve-tag" fill="#0B41CF" text-anchor="start">engaged</text>
+        </g>
+        <circle id="troughDot" r="6" stroke="#fff" stroke-width="2"></circle>
+        <text id="troughLbl" class="trough-lbl" text-anchor="middle"></text>
+        <text id="lblMoney" class="inchart-big" text-anchor="middle"></text>
+        <text id="lblMoneySub" class="inchart-sub" text-anchor="middle"></text>
+        <g id="gHover" style="display:none">
+          <line id="hovLine" stroke="#9AA1AD" stroke-width="1" stroke-dasharray="3 4"></line>
+          <circle id="hovDotBad" r="4.5" fill="#C24B26" stroke="#fff" stroke-width="1.5"></circle>
+          <circle id="hovDotGood" r="4.5" fill="#0B41CF" stroke="#fff" stroke-width="1.5"></circle>
+        </g>
+      </svg>
+      <div class="tooltip" id="tt">
+        <div class="tt-month" id="ttMonth"></div>
+        <div class="row"><span class="dot" style="background:var(--brick)"></span><span>unmanaged&nbsp;<b id="ttBadP"></b>&nbsp;=&nbsp;<b id="ttBadE"></b>&nbsp;this month</span></div>
+        <div class="row"><span class="dot" style="background:var(--blue)"></span><span>engaged&nbsp;<b id="ttGoodP"></b>&nbsp;=&nbsp;<b id="ttGoodE"></b>&nbsp;this month</span></div>
+        <div class="row delta"><span class="dot" style="background:var(--ink)"></span><span>difference&nbsp;<b id="ttDelta"></b>&nbsp;in this month</span></div>
+      </div>
+      <div class="axis-note" id="axisNote"></div>
+    </div>
+  </div>
+
+  <details class="src">
+    <summary><span class="tri">&#9654;</span> Sources &amp; model</summary>
+    <div class="src-body">
+      <h3>Model</h3>
+      <p>Monthly output of the people in scope follows a dip-recovery curve (refs. 8, 1-4): <b>unmanaged</b> bottoms out at about 87% of a normal month around month 7 and settles at 96%; <b>engaged</b> bottoms out at about 96% around month 3, is back at 100% by month 8 and settles at 103%. Totals are cumulative: for each of the 36 months after move-in, (curve % &minus; reference %) &times; the monthly value, added up; the unmanaged headline is measured against today's 100%, the engaged headline against the unmanaged curve, with both curves' own dips included in their sums. Output is converted one to one into the value carried (every 1% = the figure shown under the chart). Scenario depths are conservative planning assumptions consistent with refs. 1-7; the &euro; 274,7 M input is an estimate as documented in the calculation note above.</p>
+      <h3>References</h3>
+      <ol>
+        <li>Brennan, A., Chugh, J. S., &amp; Kline, T. (2002). Traditional versus open office design: A longitudinal field study. <i>Environment and Behavior</i>, 34(3), 279-299.</li>
+        <li>Wijk, K., Bergsten, E. L., Mathiassen, S. E., &amp; Hallman, D. M. (2023). Individual determinants of satisfaction with the work environment after relocation to activity-based workplaces: A prospective study. <i>PLOS ONE</i>, 18(3), e0281771.</li>
+        <li>Bernstein, E. S., &amp; Turban, S. (2018). The impact of the 'open' workspace on human collaboration. <i>Philosophical Transactions of the Royal Society B</i>, 373(1753), 20170239.</li>
+        <li>Leesman (2019). <i>The Workplace Experience Revolution Part 2: Do new workplaces work?</i> Leesman Index, London. 346 post-occupancy workplaces, 84,158 respondents.</li>
+        <li>Prosci (2023). <i>Best Practices in Change Management</i> (12th ed.). Prosci Inc., Fort Collins. 2,600+ practitioners.</li>
+        <li>EY &amp; Sa&iuml;d Business School, University of Oxford (2022). <i>The future of transformation is human.</i> 2,062 respondents, 23 countries.</li>
+        <li>Gartner (2023). Employees are losing patience with change initiatives. <i>Harvard Business Review</i>, May 2023.</li>
+        <li>Satir, V., Banmen, J., Gerber, J., &amp; Gomori, M. (1991). <i>The Satir Model: Family Therapy and Beyond.</i> Science and Behavior Books, Palo Alto.</li>
+        <li>Roche (2026). <i>Full-Year Results 2025</i> (29 January 2026) and <i>Annual Report 2025.</i> F. Hoffmann-La Roche Ltd, Basel. Group sales CHF 61,5 bn; 112.774 employees.</li>
+        <li>trend / APA (2026, 29 January). Pharmageschäft trägt Roche. CHF 61,5 bn = &euro; 66,94 bn.</li>
+        <li>Roche Austria GmbH (2026). <i>RFP Change Engagement Support Services, Roche Campus Vienna,</i> Part 2: Technical Requirements. 463 colleagues, Engelhorngasse 3, 1210 Wien.</li>
+        <li>PHARMIG (2024). Member profile Roche Austria GmbH, pharmastandort.at: rund 500 Mitarbeitende in Wien; roche.at: rund 400 Mitarbeiter:innen in &Ouml;sterreich.</li>
+      </ol>
+      <p class="endnote">All figures on screen are outputs of the editable inputs above, not forecasts. Built by disruptive.wtf, June 2026.</p>
+    </div>
+  </details>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var BAD  = {D:12, tp:6, U:-4, ts:12};
+  var GOOD = {D:5,  tp:3, U: 3, ts:6};
+  var HORIZON = 36, PRE = 6;
+  var DEFAULT_PER_COL = 66.9e9/112774;
+
+  function perf(t,P){
+    if(t < 0) return 100;
+    return 100 - P.D*(t/P.tp)*Math.exp(1 - t/P.tp) + P.U*(1 - Math.exp(-Math.pow(t/P.ts,2)));
+  }
+  function cumulative(P, monthlyM){
+    var s=0, dt=.25;
+    for(var t=0;t<=HORIZON;t+=dt) s += (perf(t,P)-100)/100*monthlyM*dt;
+    return s;
+  }
+  function lerpP(a,b,x){
+    return {D:a.D+(b.D-a.D)*x, tp:a.tp+(b.tp-a.tp)*x, U:a.U+(b.U-a.U)*x, ts:a.ts+(b.ts-a.ts)*x};
+  }
+  function troughOf(P){
+    var tm=0,pm=100;
+    for(var t=0;t<=16;t+=.05){var p=perf(t,P); if(p<pm){pm=p;tm=t;}}
+    return {t:tm,p:pm};
+  }
+
+  var W=1000,H=440,mL=74,mR=112,mT=22,mB=38,Y_MIN=82,Y_MAX=108;
+  function X(t){ return mL + (t+PRE)/(HORIZON+PRE)*(W-mL-mR); }
+  function Xinv(x){ return (x-mL)/(W-mL-mR)*(HORIZON+PRE)-PRE; }
+  function Y(p){ return mT + (Y_MAX-p)/(Y_MAX-Y_MIN)*(H-mT-mB); }
+
+  function curvePath(P){
+    var d="M"+X(-PRE).toFixed(1)+" "+Y(100).toFixed(1);
+    for(var t=-PRE+.25;t<=HORIZON+.001;t+=.25) d+=" L"+X(t).toFixed(1)+" "+Y(perf(t,P)).toFixed(1);
+    return d;
+  }
+  function bandPath(blendVal){
+    var d="M"+X(0).toFixed(1)+" "+Y(100+blendVal*(perf(0,GOOD)-100)).toFixed(1);
+    var t;
+    for(t=.25;t<=HORIZON+.001;t+=.25) d+=" L"+X(t).toFixed(1)+" "+Y(100+blendVal*(perf(t,GOOD)-100)).toFixed(1);
+    for(t=HORIZON;t>=-0.001;t-=.25) d+=" L"+X(t).toFixed(1)+" "+Y(perf(t,BAD)).toFixed(1);
+    return d+" Z";
+  }
+
+  function el(id){ return document.getElementById(id); }
+
+  var fmtEur = new Intl.NumberFormat('de-AT',{maximumFractionDigits:0});
+  function money(mEuros){
+    var v=Math.round(mEuros*1e6);
+    return (v<0?'\u2212':'')+'\u20AC '+fmtEur.format(Math.abs(v));
+  }
+  function moneyM(mEuros){
+    var sign = mEuros<0?'\u2212':'+';
+    return sign+'\u20AC '+Math.abs(mEuros).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';
+  }
+
+  function buildStatic(){
+    var NS="http://www.w3.org/2000/svg", g=el('gGrid');
+    [90,100,105].forEach(function(p){
+      if(p!==100){
+        var l=document.createElementNS(NS,'line');
+        l.setAttribute('x1',mL);l.setAttribute('x2',W-mR);
+        l.setAttribute('y1',Y(p));l.setAttribute('y2',Y(p));
+        l.setAttribute('stroke','#ECEFF5');l.setAttribute('stroke-width','1');
+        g.appendChild(l);
+      }else{
+        var b=document.createElementNS(NS,'line');
+        b.setAttribute('x1',mL);b.setAttribute('x2',W-mR);
+        b.setAttribute('y1',Y(100));b.setAttribute('y2',Y(100));
+        b.setAttribute('stroke','#9AA1AD');b.setAttribute('stroke-width','1.3');
+        b.setAttribute('stroke-dasharray','3 6');
+        g.appendChild(b);
+      }
+      var t=document.createElementNS(NS,'text');
+      t.setAttribute('x',mL-8);t.setAttribute('y',Y(p)-1);
+      t.setAttribute('text-anchor','end');
+      t.setAttribute('class', p===100?'axis-text em':'axis-text');
+      t.textContent=p+'%';g.appendChild(t);
+      var e=document.createElementNS(NS,'text');
+      e.setAttribute('x',mL-8);e.setAttribute('y',Y(p)+10);
+      e.setAttribute('text-anchor','end');e.setAttribute('class','axis-eur');
+      e.setAttribute('id','eur'+p);e.textContent='';
+      g.appendChild(e);
+    });
+    [0,6,12,18,24,30,36].forEach(function(m){
+      var t=document.createElementNS(NS,'text');
+      t.setAttribute('x',X(m));t.setAttribute('y',H-12);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('class', m===0?'axis-text em':'axis-text');
+      t.textContent = m===0?'Move-in 2029':(m===36?'+36 months':'+'+m);
+      g.appendChild(t);
+    });
+    var gm=el('gMove');
+    var v=document.createElementNS(NS,'line');
+    v.setAttribute('x1',X(0));v.setAttribute('x2',X(0));
+    v.setAttribute('y1',mT-2);v.setAttribute('y2',H-mB);
+    v.setAttribute('stroke','#9AA1AD');v.setAttribute('stroke-opacity','0.45');
+    v.setAttribute('stroke-width','1.3');
+    gm.appendChild(v);
+    var lab=document.createElementNS(NS,'text');
+    lab.setAttribute('x',X(0)+7);lab.setAttribute('y',mT+9);
+    lab.setAttribute('class','axis-text');lab.setAttribute('id','moveLab');
+    lab.textContent='';
+    gm.appendChild(lab);
+    el('ghostBad').setAttribute('d', curvePath(BAD));
+    el('ghostGood').setAttribute('d', curvePath(GOOD));
+    var yB=Y(perf(HORIZON,BAD)), yG=Y(perf(HORIZON,GOOD));
+    el('tagBad').setAttribute('x',X(HORIZON)+10); el('tagBad').setAttribute('y',yB+4);
+    el('tagGood').setAttribute('x',X(HORIZON)+10); el('tagGood').setAttribute('y',yG+4);
+  }
+
+  /* ---------- state ---------- */
+  var mode='bad';
+  var blend=0, blendTgt=0;
+  var heroShown=0, heroTarget=0;
+  var curMonthly=0, curBadCum=0, curGoodCum=0, curGap=0, inputsOk=false;
+  var valManual=false;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function inputs(){
+    var val=parseFloat(el('inVal').value), scope=parseFloat(el('inScope').value);
+    var ok = isFinite(val)&&val>0 && isFinite(scope)&&scope>0;
+    return {ok:ok, val:val, scope:scope};
+  }
+
+  function recalc(){
+    var i=inputs();
+    inputsOk=i.ok;
+    if(!i.ok){
+      ['sumYear','outPerEmp','outMonth','chipBad','chipGood','chipHead','heroVal'].forEach(function(id){el(id).textContent='···';});
+      ['eur90','eur100','eur105'].forEach(function(id){var n=el(id); if(n) n.textContent='';});
+      el('lblMoney').textContent=''; el('lblMoneySub').textContent='';
+      el('troughLbl').textContent=''; el('troughDot').setAttribute('r','0');
+      el('axisNote').innerHTML='';
+      heroTarget=0; heroShown=0; curMonthly=0;
+      return;
+    }
+    var perCol = i.val*1e6/i.scope;
+    var monthly= i.val/12;
+    curMonthly = monthly;
+
+    el('outPerEmp').textContent = '\u20AC '+fmtEur.format(Math.round(perCol/100)*100);
+    el('outMonth').textContent  = (Math.round(monthly*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1});
+    el('sumYear').textContent   = '\u20AC '+(Math.round(i.val*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';
+    el('sumScope').textContent  = fmtEur.format(i.scope);
+
+    [90,100,105].forEach(function(p){
+      el('eur'+p).textContent='\u20AC '+(monthly*p/100).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M/mo';
+    });
+
+    el('axisNote').innerHTML='Vertical axis: monthly output of the <b>'+fmtEur.format(i.scope)+'</b> people in scope, as % of a normal month today. <b>100% = '+money(monthly)+' per month.</b> Every 1% on this chart = <b>'+money(monthly/100)+'</b> per month.';
+
+    curBadCum=cumulative(BAD,monthly); curGoodCum=cumulative(GOOD,monthly);
+    curGap=curGoodCum-curBadCum;
+
+    el('chipBad').textContent  = money(curBadCum);
+    el('chipGood').textContent = '+'+money(curGoodCum);
+    el('chipHead').textContent = '\u2248 '+money(curGap/i.scope);
+    el('moveLab').textContent  = fmtEur.format(i.scope)+' colleagues';
+
+    if(mode==='bad'){
+      el('heroLabel').textContent='The unmanaged dip costs';
+      el('heroSub').innerHTML='all <b>36 monthly gaps</b> between the red curve and today\u2019s 100%, each converted into euros, then <b>added up month by month</b> over the first 36 months after move-in';
+      heroTarget=curBadCum;
+    }else{
+      el('heroLabel').textContent='Engaged instead of unmanaged saves';
+      el('heroSub').innerHTML='the <b>month-by-month difference</b> between the blue and the red curve, added up over <b>36 months</b> \u00B7 the blue curve\u2019s own dip below 100% is already counted in \u00B7 about <b>'+money(curGap/i.scope)+'</b> per colleague';
+      heroTarget=curGap;
+    }
+    paintBlend();
+  }
+
+  function paintBlend(){
+    var P=lerpP(BAD,GOOD,blend);
+    var d=curvePath(P);
+    el('actBad').setAttribute('d',d);
+    el('actGood').setAttribute('d',d);
+    el('actBad').setAttribute('stroke-opacity',(1-blend));
+    el('actGood').setAttribute('stroke-opacity',blend);
+    var area=el('areaActive');
+    area.setAttribute('d',bandPath(blend));
+    area.setAttribute('fill', blend>0.5 ? 'url(#gBlue)' : 'url(#gEmber)');
+    area.setAttribute('fill-opacity', 0.55 + 0.45*Math.abs(blend-0.5)*2);
+
+    if(inputsOk){
+      var col = blend>0.5 ? '#0B41CF' : '#A93D1C';
+
+      /* the dip itself, marked */
+      var tr=troughOf(P);
+      var dot=el('troughDot'), tl=el('troughLbl');
+      dot.setAttribute('cx',X(tr.t)); dot.setAttribute('cy',Y(tr.p));
+      dot.setAttribute('fill',col); dot.setAttribute('r','6');
+      tl.textContent=Math.round(tr.p)+'% \u00B7 month '+Math.round(tr.t);
+      tl.setAttribute('x',X(tr.t)); tl.setAttribute('y',Y(tr.p)+24); tl.setAttribute('fill',col);
+
+      /* the money, written inside the shaded region */
+      var tL=19;
+      var yTop=Y(100+blend*(perf(tL,GOOD)-100)), yBot=Y(perf(tL,BAD));
+      var yMid=(yTop+yBot)/2;
+      var showVal = blend>0.5 ? curGap : curBadCum;
+      var sub = blend>0.5 ? 'saved vs unmanaged, added up over 36 months' : 'lost vs today, added up over 36 months';
+      var lm=el('lblMoney'), ls=el('lblMoneySub');
+      lm.textContent=moneyM(showVal); lm.setAttribute('x',X(tL)); lm.setAttribute('y',yMid+2); lm.setAttribute('fill',col);
+      ls.textContent=sub; ls.setAttribute('x',X(tL)); ls.setAttribute('y',yMid+22); ls.setAttribute('fill',col); ls.setAttribute('fill-opacity','0.75');
+    }
+  }
+
+  function frame(){
+    var d=blendTgt-blend;
+    if(Math.abs(d)>0.0015){
+      blend += reduceMotion ? d : d*0.085;
+      if(Math.abs(blendTgt-blend)<=0.0015) blend=blendTgt;
+      paintBlend();
+    }
+    var dh=heroTarget-heroShown;
+    if(Math.abs(dh)>0.004){
+      heroShown += reduceMotion ? dh : dh*0.09;
+      if(Math.abs(heroTarget-heroShown)<=0.004) heroShown=heroTarget;
+      el('heroVal').textContent = inputsOk ? money(heroShown) : '···';
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function setMode(m){
+    mode=m;
+    blendTgt = (m==='good') ? 1 : 0;
+    document.body.classList.toggle('mode-bad', m==='bad');
+    document.body.classList.toggle('mode-good', m==='good');
+    el('btnBad').className  = m==='bad'  ? 'act-bad'  : '';
+    el('btnGood').className = m==='good' ? 'act-good' : '';
+    recalc();
+  }
+
+  /* ---------- hover details ---------- */
+  var svg=el('chart'), box=el('chartbox'), tt=el('tt'), gh=el('gHover');
+  function onMove(ev){
+    if(!inputsOk){ return; }
+    var r=svg.getBoundingClientRect();
+    var xSvg=(ev.clientX-r.left)/r.width*W;
+    var t=Xinv(xSvg);
+    if(t<-0.5||t>HORIZON+0.5){ onLeave(); return; }
+    var tm=Math.max(0,Math.min(HORIZON,Math.round(t)));
+    var pB=perf(tm,BAD), pG=perf(tm,GOOD);
+    var eB=(pB-100)/100*curMonthly, eG=(pG-100)/100*curMonthly;
+    el('ttMonth').textContent = tm===0 ? 'Move-in month' : 'Month '+tm+' after move-in';
+    el('ttBadP').textContent  = pB.toFixed(1).replace('.',',')+'%';
+    el('ttBadE').textContent  = moneyM(eB);
+    el('ttGoodP').textContent = pG.toFixed(1).replace('.',',')+'%';
+    el('ttGoodE').textContent = moneyM(eG);
+    el('ttDelta').textContent = moneyM(eG-eB).replace('+','');
+    var xPix=X(tm);
+    el('hovLine').setAttribute('x1',xPix); el('hovLine').setAttribute('x2',xPix);
+    el('hovLine').setAttribute('y1',mT-2); el('hovLine').setAttribute('y2',H-mB);
+    el('hovDotBad').setAttribute('cx',xPix); el('hovDotBad').setAttribute('cy',Y(pB));
+    el('hovDotGood').setAttribute('cx',xPix); el('hovDotGood').setAttribute('cy',Y(pG));
+    gh.style.display='';
+    tt.style.display='block';
+    var bx=box.getBoundingClientRect();
+    var px=ev.clientX-bx.left;
+    var flip = px > bx.width-250;
+    tt.style.left = (flip ? px-235 : px+16)+'px';
+  }
+  function onLeave(){ gh.style.display='none'; tt.style.display='none'; }
+  svg.addEventListener('pointermove', onMove);
+  svg.addEventListener('pointerleave', onLeave);
+
+  el('btnBad').addEventListener('click', function(){ setMode('bad'); });
+  el('btnGood').addEventListener('click', function(){ setMode('good'); });
+  el('inVal').addEventListener('input', function(){ valManual=true; recalc(); });
+  el('inScope').addEventListener('input', function(){
+    if(!valManual){
+      var s=parseFloat(el('inScope').value);
+      if(isFinite(s)&&s>0) el('inVal').value=(Math.round(s*DEFAULT_PER_COL/1e6*10)/10);
+    }
+    recalc();
+  });
+
+  buildStatic();
+  recalc();
+  el('heroVal').textContent = inputsOk ? money(0) : '···';
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
