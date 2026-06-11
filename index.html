@@ -62,14 +62,6 @@
   .hero-sub{margin-top:5px;font-size:13px;color:var(--grey);max-width:880px;line-height:1.55}
   .hero-sub b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
 
-  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
-  .chip{border:1px solid var(--hair);border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--grey);font-variant-numeric:tabular-nums;background:#FAFBFD;display:flex;align-items:center;gap:8px}
-  .chip .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .chip b{font-weight:700}
-  .chip.ember b{color:var(--brick-dark)}
-  .chip.blue b{color:var(--blue)}
-  .chip.plain b{color:var(--ink)}
-
   .chartbox{margin-top:16px;position:relative}
   svg{display:block;width:100%;height:auto}
   .axis-text{font-family:var(--font);font-size:11px;fill:var(--faint)}
@@ -170,12 +162,6 @@
     <div class="hero-label" id="heroLabel">The unmanaged dip costs</div>
     <div class="hero-num"><span id="heroVal">···</span></div>
     <div class="hero-sub" id="heroSub"></div>
-
-    <div class="chips">
-      <div class="chip ember"><span class="dot" style="background:var(--brick)"></span>unmanaged&nbsp;<b id="chipBad">···</b>&nbsp;· 36 months</div>
-      <div class="chip blue"><span class="dot" style="background:var(--blue)"></span>engaged&nbsp;<b id="chipGood">···</b>&nbsp;· 36 months</div>
-      <div class="chip plain"><span class="dot" style="background:var(--ink)"></span>per colleague&nbsp;<b id="chipHead">···</b></div>
-    </div>
 
     <div class="chartbox" id="chartbox">
       <svg id="chart" viewBox="0 0 1000 440" preserveAspectRatio="xMidYMid meet" aria-label="Monthly output after move-in: unmanaged versus engaged change. Hover for monthly detail.">
@@ -369,7 +355,7 @@
     var i=inputs();
     inputsOk=i.ok;
     if(!i.ok){
-      ['sumYear','outPerEmp','outVal','outMonth','chipBad','chipGood','chipHead','heroVal'].forEach(function(id){el(id).textContent='···';});
+      ['sumYear','outPerEmp','outVal','outMonth','heroVal'].forEach(function(id){el(id).textContent='···';});
       ['eur90','eur100','eur105'].forEach(function(id){var n=el(id); if(n) n.textContent='';});
       el('lblMoney').textContent=''; el('lblMoneySub').textContent='';
       el('troughLbl').textContent=''; el('troughDot').setAttribute('r','0');
@@ -396,10 +382,6 @@
 
     curBadCum=cumulative(BAD,monthly); curGoodCum=cumulative(GOOD,monthly);
     curGap=curGoodCum-curBadCum;
-
-    el('chipBad').textContent  = moneyM(curBadCum);
-    el('chipGood').textContent = moneyM(curGoodCum);
-    el('chipHead').textContent = '\u2248 \u20AC '+fmtEur.format(Math.round(curGap/i.scope/1000)*1000);
     el('moveLab').textContent  = fmtEur.format(i.scope)+' colleagues';
 
     if(mode==='bad'){
