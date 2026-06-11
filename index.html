@@ -41,7 +41,7 @@
     -moz-appearance:textfield;appearance:textfield;
   }
   .eq-input input::-webkit-outer-spin-button,.eq-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-  #inScope{width:4.2ch} #inVal{width:5.6ch}
+  #inScope{width:4.2ch} #inRev{width:4.8ch} #inEmp{width:8ch}
   .eq-input .unit{font-size:12px;font-weight:600;color:var(--grey);white-space:nowrap}
   .eq-result{font-weight:800;color:var(--blue);font-size:clamp(20px,2.3vw,28px);font-variant-numeric:tabular-nums;white-space:nowrap}
   .eq-result .unit{font-size:12px;font-weight:600;color:var(--grey);margin-left:5px}
@@ -122,31 +122,40 @@
       <span class="tri">&#9654;</span>
       <span>The number behind everything:</span>
       <b><span id="sumYear">···</span></b>
-      <span>per year carried by the <b id="sumScope">463</b> colleagues in Vienna · open to see and edit</span>
+      <span>per year carried by the <b id="sumScope">463</b> colleagues · open to see how it is built, and to change it</span>
     </summary>
     <div class="eq-body">
       <div class="eq-row">
         <div class="eq-item">
-          <span class="eq-input"><input id="inVal" type="number" inputmode="decimal" min="0" step="1" value="274.7"><span class="unit">€ M / year</span></span>
-          <span class="eq-cap">value carried by Roche's people in Austria. Estimate, see note below. Replace with the internal figure any time.</span>
+          <span class="eq-input"><input id="inRev" type="number" inputmode="decimal" min="0" step="0.1" value="66.9"><span class="unit">&euro; bn / year</span></span>
+          <span class="eq-cap">Roche Group revenue, FY 2025. CHF 61,5 bn (Full-Year Results, 29 Jan 2026); &euro; conversion per APA / trend.</span>
         </div>
         <div class="eq-op">&#247;</div>
         <div class="eq-item">
+          <span class="eq-input"><input id="inEmp" type="number" inputmode="numeric" min="1" step="1" value="112774"><span class="unit">employees</span></span>
+          <span class="eq-cap">Roche Group worldwide, end of 2025 (Annual Report 2025).</span>
+        </div>
+        <div class="eq-op">=</div>
+        <div class="eq-item">
+          <span class="eq-result"><span id="outPerEmp">···</span><span class="unit">per employee / year</span></span>
+          <span class="eq-cap">what one Roche employee carries on average</span>
+        </div>
+        <div class="eq-op">&#215;</div>
+        <div class="eq-item">
           <span class="eq-input"><input id="inScope" type="number" inputmode="numeric" min="1" step="1" value="463"><span class="unit">colleagues</span></span>
-          <span class="eq-cap">moving to Engelhorngasse (Roche RFP). In effect all of Roche Austria: Roche states rund 400 in Austria (roche.at) and rund 500 in Vienna (PHARMIG profile, 2024).</span>
+          <span class="eq-cap">moving to Engelhorngasse. Roche RFP. In effect all of Roche in Austria: Roche itself states rund 400 (roche.at) and rund 500 in Vienna (PHARMIG profile, 2024).</span>
         </div>
         <div class="eq-op">=</div>
         <div class="eq-item">
-          <span class="eq-result"><span id="outPerEmp">···</span><span class="unit">per colleague / year</span></span>
-          <span class="eq-cap">value each colleague carries on average</span>
+          <span class="eq-result"><span id="outVal">···</span><span class="unit">&euro; M / year in scope</span></span>
+          <span class="eq-cap">carried by the people who move. Stands in for Roche Austria&#8217;s revenue, which is not public; see note.</span>
         </div>
         <div class="eq-op">=</div>
         <div class="eq-item">
-          <span class="eq-result"><span id="outMonth">···</span><span class="unit">€ M / month at 100%</span></span>
-          <span class="eq-cap">one normal month, today's performance</span>
+          <span class="eq-result"><span id="outMonth">···</span><span class="unit">&euro; M / month at 100%</span></span>
+          <span class="eq-cap">one normal month, today&#8217;s performance</span>
         </div>
       </div>
-      <div class="eq-note"><b>Why the € 274,7 M is an estimate:</b> Roche's Austrian companies publish only abbreviated accounts, so no Austrian revenue figure is public. The prefill is 463 colleagues &times; &euro; 593.200, the Group's average revenue per employee in FY 2025 (&euro; 66,9 bn &divide; 112.774 employees, Roche Annual Report 2025; &euro; conversion per Austrian press agency APA / trend). Type Roche Austria's real number into the field and everything recalculates.</div>
     </div>
   </details>
 
@@ -215,7 +224,7 @@
     <summary><span class="tri">&#9654;</span> Sources &amp; model</summary>
     <div class="src-body">
       <h3>Model</h3>
-      <p>Monthly output of the people in scope follows a dip-recovery curve (refs. 8, 1-4): <b>unmanaged</b> bottoms out at about 87% of a normal month around month 7 and settles at 96%; <b>engaged</b> bottoms out at about 96% around month 3, is back at 100% by month 8 and settles at 103%. Totals are cumulative: for each of the 36 months after move-in, (curve % &minus; reference %) &times; the monthly value, added up; the unmanaged headline is measured against today's 100%, the engaged headline against the unmanaged curve, with both curves' own dips included in their sums. Output is converted one to one into the value carried (every 1% = the figure shown under the chart). Scenario depths are conservative planning assumptions consistent with refs. 1-7; the &euro; 274,7 M input is an estimate as documented in the calculation note above.</p>
+      <p>Monthly output of the people in scope follows a dip-recovery curve (refs. 8, 1-4): <b>unmanaged</b> bottoms out at about 87% of a normal month around month 7 and settles at 96%; <b>engaged</b> bottoms out at about 96% around month 3, is back at 100% by month 8 and settles at 103%. Totals are cumulative: for each of the 36 months after move-in, (curve % &minus; reference %) &times; the monthly value, added up; the unmanaged headline is measured against today's 100%, the engaged headline against the unmanaged curve, with both curves' own dips included in their sums. Output is converted one to one into the value carried (every 1% = the figure shown under the chart). Scenario depths are conservative planning assumptions consistent with refs. 1-7; the &euro; 274,7 M basis is derived from Roche&#8217;s published Group figures (&euro; 66,9 bn &divide; 112.774 &times; 463) as documented in the calculation note above.</p>
       <h3>References</h3>
       <ol>
         <li>Brennan, A., Chugh, J. S., &amp; Kline, T. (2002). Traditional versus open office design: A longitudinal field study. <i>Environment and Behavior</i>, 34(3), 279-299.</li>
@@ -243,7 +252,6 @@
   var BAD  = {D:12, tp:6, U:-4, ts:12};
   var GOOD = {D:5,  tp:3, U: 3, ts:6};
   var HORIZON = 36, PRE = 6;
-  var DEFAULT_PER_COL = 66.9e9/112774;
 
   function perf(t,P){
     if(t < 0) return 100;
@@ -353,20 +361,19 @@
   var blend=0, blendTgt=0;
   var heroShown=0, heroTarget=0;
   var curMonthly=0, curBadCum=0, curGoodCum=0, curGap=0, inputsOk=false;
-  var valManual=false;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function inputs(){
-    var val=parseFloat(el('inVal').value), scope=parseFloat(el('inScope').value);
-    var ok = isFinite(val)&&val>0 && isFinite(scope)&&scope>0;
-    return {ok:ok, val:val, scope:scope};
+    var rev=parseFloat(el('inRev').value), emp=parseFloat(el('inEmp').value), scope=parseFloat(el('inScope').value);
+    var ok = isFinite(rev)&&rev>0 && isFinite(emp)&&emp>0 && isFinite(scope)&&scope>0;
+    return {ok:ok, rev:rev, emp:emp, scope:scope};
   }
 
   function recalc(){
     var i=inputs();
     inputsOk=i.ok;
     if(!i.ok){
-      ['sumYear','outPerEmp','outMonth','chipBad','chipGood','chipHead','heroVal'].forEach(function(id){el(id).textContent='···';});
+      ['sumYear','outPerEmp','outVal','outMonth','chipBad','chipGood','chipHead','heroVal'].forEach(function(id){el(id).textContent='···';});
       ['eur90','eur100','eur105'].forEach(function(id){var n=el(id); if(n) n.textContent='';});
       el('lblMoney').textContent=''; el('lblMoneySub').textContent='';
       el('troughLbl').textContent=''; el('troughDot').setAttribute('r','0');
@@ -374,13 +381,15 @@
       heroTarget=0; heroShown=0; curMonthly=0;
       return;
     }
-    var perCol = i.val*1e6/i.scope;
-    var monthly= i.val/12;
+    var perEmp = i.rev*1e9/i.emp;
+    var totalM = perEmp*i.scope/1e6;
+    var monthly= totalM/12;
     curMonthly = monthly;
 
-    el('outPerEmp').textContent = '\u20AC '+fmtEur.format(Math.round(perCol/100)*100);
+    el('outPerEmp').textContent = '\u20AC '+fmtEur.format(Math.round(perEmp/100)*100);
+    el('outVal').textContent    = (Math.round(totalM*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1});
     el('outMonth').textContent  = (Math.round(monthly*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1});
-    el('sumYear').textContent   = '\u20AC '+(Math.round(i.val*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';
+    el('sumYear').textContent   = '\u20AC '+(Math.round(totalM*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';
     el('sumScope').textContent  = fmtEur.format(i.scope);
 
     [90,100,105].forEach(function(p){
@@ -505,14 +514,9 @@
 
   el('btnBad').addEventListener('click', function(){ setMode('bad'); });
   el('btnGood').addEventListener('click', function(){ setMode('good'); });
-  el('inVal').addEventListener('input', function(){ valManual=true; recalc(); });
-  el('inScope').addEventListener('input', function(){
-    if(!valManual){
-      var s=parseFloat(el('inScope').value);
-      if(isFinite(s)&&s>0) el('inVal').value=(Math.round(s*DEFAULT_PER_COL/1e6*10)/10);
-    }
-    recalc();
-  });
+  el('inRev').addEventListener('input', recalc);
+  el('inEmp').addEventListener('input', recalc);
+  el('inScope').addEventListener('input', recalc);
 
   buildStatic();
   recalc();
