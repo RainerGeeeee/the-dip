@@ -122,38 +122,38 @@
       <span class="tri">&#9654;</span>
       <span>The number behind everything:</span>
       <b><span id="sumYear">···</span></b>
-      <span>per year carried by the <b id="sumScope">463</b> colleagues · open to see how it is built, and to change it</span>
+      <span>per year · carried by the <b id="sumScope">463</b></span>
     </summary>
     <div class="eq-body">
       <div class="eq-row">
         <div class="eq-item">
           <span class="eq-input"><input id="inRev" type="number" inputmode="decimal" min="0" step="0.1" value="66.9"><span class="unit">&euro; bn / year</span></span>
-          <span class="eq-cap">Roche Group revenue, FY 2025. CHF 61,5 bn (Full-Year Results, 29 Jan 2026); &euro; conversion per APA / trend.</span>
+          <span class="eq-cap">Roche Group revenue, FY 2025</span>
         </div>
         <div class="eq-op">&#247;</div>
         <div class="eq-item">
           <span class="eq-input"><input id="inEmp" type="number" inputmode="numeric" min="1" step="1" value="112774"><span class="unit">employees</span></span>
-          <span class="eq-cap">Roche Group worldwide, end of 2025 (Annual Report 2025).</span>
+          <span class="eq-cap">Roche employees worldwide</span>
         </div>
         <div class="eq-op">=</div>
         <div class="eq-item">
           <span class="eq-result"><span id="outPerEmp">···</span><span class="unit">per employee / year</span></span>
-          <span class="eq-cap">what one Roche employee carries on average</span>
+          <span class="eq-cap">one Roche employee carries</span>
         </div>
         <div class="eq-op">&#215;</div>
         <div class="eq-item">
           <span class="eq-input"><input id="inScope" type="number" inputmode="numeric" min="1" step="1" value="463"><span class="unit">colleagues</span></span>
-          <span class="eq-cap">moving to Engelhorngasse. Roche RFP. In effect all of Roche in Austria: Roche itself states rund 400 (roche.at) and rund 500 in Vienna (PHARMIG profile, 2024).</span>
+          <span class="eq-cap">moving to Engelhorngasse</span>
         </div>
         <div class="eq-op">=</div>
         <div class="eq-item">
           <span class="eq-result"><span id="outVal">···</span><span class="unit">&euro; M / year in scope</span></span>
-          <span class="eq-cap">carried by the people who move. Stands in for Roche Austria&#8217;s revenue, which is not public; see note.</span>
+          <span class="eq-cap">carried by the people who move</span>
         </div>
         <div class="eq-op">=</div>
         <div class="eq-item">
           <span class="eq-result"><span id="outMonth">···</span><span class="unit">&euro; M / month at 100%</span></span>
-          <span class="eq-cap">one normal month, today&#8217;s performance</span>
+          <span class="eq-cap">one normal month today</span>
         </div>
       </div>
     </div>
@@ -172,9 +172,9 @@
     <div class="hero-sub" id="heroSub"></div>
 
     <div class="chips">
-      <div class="chip ember"><span class="dot" style="background:var(--brick)"></span>unmanaged&nbsp;<b id="chipBad">···</b>&nbsp;added up over 36 months</div>
-      <div class="chip blue"><span class="dot" style="background:var(--blue)"></span>engaged&nbsp;<b id="chipGood">···</b>&nbsp;vs today, added up over 36 months</div>
-      <div class="chip plain"><span class="dot" style="background:var(--ink)"></span>difference&nbsp;<b id="chipHead">···</b>&nbsp;per colleague, over 36 months</div>
+      <div class="chip ember"><span class="dot" style="background:var(--brick)"></span>unmanaged&nbsp;<b id="chipBad">···</b>&nbsp;· 36 months</div>
+      <div class="chip blue"><span class="dot" style="background:var(--blue)"></span>engaged&nbsp;<b id="chipGood">···</b>&nbsp;· 36 months</div>
+      <div class="chip plain"><span class="dot" style="background:var(--ink)"></span>per colleague&nbsp;<b id="chipHead">···</b></div>
     </div>
 
     <div class="chartbox" id="chartbox">
@@ -221,11 +221,8 @@
   </div>
 
   <details class="src">
-    <summary><span class="tri">&#9654;</span> Sources &amp; model</summary>
+    <summary><span class="tri">&#9654;</span> Sources</summary>
     <div class="src-body">
-      <h3>Model</h3>
-      <p>Monthly output of the people in scope follows a dip-recovery curve (refs. 8, 1-4): <b>unmanaged</b> bottoms out at about 87% of a normal month around month 7 and settles at 96%; <b>engaged</b> bottoms out at about 96% around month 3, is back at 100% by month 8 and settles at 103%. Totals are cumulative: for each of the 36 months after move-in, (curve % &minus; reference %) &times; the monthly value, added up; the unmanaged headline is measured against today's 100%, the engaged headline against the unmanaged curve, with both curves' own dips included in their sums. Output is converted one to one into the value carried (every 1% = the figure shown under the chart). Scenario depths are conservative planning assumptions consistent with refs. 1-7; the &euro; 274,7 M basis is derived from Roche&#8217;s published Group figures (&euro; 66,9 bn &divide; 112.774 &times; 463) as documented in the calculation note above.</p>
-      <h3>References</h3>
       <ol>
         <li>Brennan, A., Chugh, J. S., &amp; Kline, T. (2002). Traditional versus open office design: A longitudinal field study. <i>Environment and Behavior</i>, 34(3), 279-299.</li>
         <li>Wijk, K., Bergsten, E. L., Mathiassen, S. E., &amp; Hallman, D. M. (2023). Individual determinants of satisfaction with the work environment after relocation to activity-based workplaces: A prospective study. <i>PLOS ONE</i>, 18(3), e0281771.</li>
@@ -240,7 +237,6 @@
         <li>Roche Austria GmbH (2026). <i>RFP Change Engagement Support Services, Roche Campus Vienna,</i> Part 2: Technical Requirements. 463 colleagues, Engelhorngasse 3, 1210 Wien.</li>
         <li>PHARMIG (2024). Member profile Roche Austria GmbH, pharmastandort.at: rund 500 Mitarbeitende in Wien; roche.at: rund 400 Mitarbeiter:innen in &Ouml;sterreich.</li>
       </ol>
-      <p class="endnote">All figures on screen are outputs of the editable inputs above, not forecasts. Built by disruptive.wtf, June 2026.</p>
     </div>
   </details>
 </div>
@@ -396,23 +392,23 @@
       el('eur'+p).textContent='\u20AC '+(monthly*p/100).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M/mo';
     });
 
-    el('axisNote').innerHTML='Vertical axis: monthly output of the <b>'+fmtEur.format(i.scope)+'</b> people in scope, as % of a normal month today. <b>100% = '+money(monthly)+' per month.</b> Every 1% on this chart = <b>'+money(monthly/100)+'</b> per month.';
+    el('axisNote').innerHTML='Monthly output of the <b>'+fmtEur.format(i.scope)+'</b>, as % of a normal month \u00B7 <b>100% = \u20AC '+(Math.round(monthly*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M</b> per month \u00B7 <b>1% \u2248 \u20AC '+fmtEur.format(Math.round(monthly*1e6/100/1000)*1000)+'</b> per month';
 
     curBadCum=cumulative(BAD,monthly); curGoodCum=cumulative(GOOD,monthly);
     curGap=curGoodCum-curBadCum;
 
-    el('chipBad').textContent  = money(curBadCum);
-    el('chipGood').textContent = '+'+money(curGoodCum);
-    el('chipHead').textContent = '\u2248 '+money(curGap/i.scope);
+    el('chipBad').textContent  = moneyM(curBadCum);
+    el('chipGood').textContent = moneyM(curGoodCum);
+    el('chipHead').textContent = '\u2248 \u20AC '+fmtEur.format(Math.round(curGap/i.scope/1000)*1000);
     el('moveLab').textContent  = fmtEur.format(i.scope)+' colleagues';
 
     if(mode==='bad'){
       el('heroLabel').textContent='The unmanaged dip costs';
-      el('heroSub').innerHTML='all <b>36 monthly gaps</b> between the red curve and today\u2019s 100%, each converted into euros, then <b>added up month by month</b> over the first 36 months after move-in';
+      el('heroSub').innerHTML='all <b>36 monthly gaps</b> below today\u2019s 100%, added up';
       heroTarget=curBadCum;
     }else{
       el('heroLabel').textContent='Engaged instead of unmanaged saves';
-      el('heroSub').innerHTML='the <b>month-by-month difference</b> between the blue and the red curve, added up over <b>36 months</b> \u00B7 the blue curve\u2019s own dip below 100% is already counted in \u00B7 about <b>'+money(curGap/i.scope)+'</b> per colleague';
+      el('heroSub').innerHTML='all <b>36 monthly gaps</b> between blue and red, added up \u00B7 blue\u2019s own dip included';
       heroTarget=curGap;
     }
     paintBlend();
