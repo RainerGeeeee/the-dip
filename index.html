@@ -48,17 +48,18 @@
   .eq-cap{font-size:11px;color:var(--faint);line-height:1.4;max-width:230px}
   .eq-note{margin-top:14px;font-size:11.5px;color:var(--faint);line-height:1.5}
 
-  .seg{display:flex;gap:8px;margin-bottom:14px;border:1px solid var(--hair);border-radius:14px;padding:6px;background:#FAFBFD}
-  .seg button{flex:1;border:0;border-radius:9px;cursor:pointer;background:transparent;color:var(--grey);font-family:var(--font);font-weight:800;font-size:clamp(15px,1.7vw,19px);letter-spacing:.01em;padding:16px 10px;transition:all .2s}
+  .seg{display:flex;gap:8px;margin-bottom:16px;border:0;border-radius:16px;padding:6px;background:#F4F6FA;box-shadow:inset 0 1px 4px rgba(20,30,60,.07)}
+  .seg button{flex:1;border:0;border-radius:11px;cursor:pointer;background:transparent;color:var(--grey);font-family:var(--font);font-weight:800;font-size:clamp(15px,1.7vw,19px);letter-spacing:.01em;padding:16px 10px;transition:all .25s cubic-bezier(.2,.7,.3,1)}
+  .seg button:active{transform:scale(.985)}
   .seg button:hover{color:var(--ink)}
-  .seg button.act-bad{background:var(--brick);color:#fff}
-  .seg button.act-good{background:var(--blue);color:#fff}
+  .seg button.act-bad{background:var(--brick);color:#fff;box-shadow:0 8px 26px rgba(194,75,38,.35)}
+  .seg button.act-good{background:var(--blue);color:#fff;box-shadow:0 8px 26px rgba(11,65,207,.35)}
 
-  .panel{border:1px solid var(--hair);border-radius:14px;padding:clamp(16px,2.4vw,28px)}
+  .panel{border:0;border-radius:20px;padding:clamp(18px,2.6vw,30px);box-shadow:0 18px 60px rgba(15,25,60,.08),0 2px 10px rgba(15,25,60,.05);background:#fff}
   .hero-label{font-size:13px;font-weight:700;letter-spacing:.03em;color:var(--grey)}
   .hero-num{font-weight:800;font-size:clamp(38px,5.6vw,74px);line-height:1.08;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .35s}
-  body.mode-bad .hero-num{color:var(--brick-dark)}
-  body.mode-good .hero-num{color:var(--blue)}
+  body.mode-bad .hero-num{color:var(--brick-dark);background:linear-gradient(105deg,#8F2F12,#C24B26 55%,#E0703F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  body.mode-good .hero-num{color:var(--blue);background:linear-gradient(105deg,#062B8A,#0B41CF 55%,#3D6CF0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .hero-sub{margin-top:5px;font-size:13px;color:var(--grey);max-width:880px;line-height:1.55}
   .hero-sub b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
 
@@ -71,8 +72,6 @@
   .inchart-big{font-family:var(--font);font-size:38px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
   .inchart-sub{font-family:var(--font);font-size:12px;font-weight:700}
   .trough-lbl{font-family:var(--font);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
-  .axis-note{margin-top:8px;font-size:12px;color:var(--faint);line-height:1.5}
-  .axis-note b{color:var(--grey);font-weight:700;font-variant-numeric:tabular-nums}
 
   .tooltip{
     position:absolute;top:10px;left:0;display:none;pointer-events:none;
@@ -98,10 +97,26 @@
   .src-body p{margin-bottom:8px}
   .src-body b{color:var(--ink);font-weight:700}
   .endnote{margin-top:12px;font-size:11.5px;color:var(--faint)}
+  .wrap{position:relative;z-index:1}
+  .bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(110px);will-change:transform;transition:background 1.6s ease}
+  .b1{width:58vw;height:58vw;left:-18vw;top:-24vh}
+  .b2{width:46vw;height:46vw;left:66vw;top:14vh}
+  .b3{width:44vw;height:44vw;left:4vw;top:58vh}
+  .lantern{left:0;top:0;width:32vw;height:32vw;filter:blur(95px);opacity:.55}
+  body.mode-bad .lantern{background:rgba(194,75,38,.22)}
+  body.mode-good .lantern{background:rgba(11,65,207,.22)}
+  body.mode-bad .b1{background:rgba(194,75,38,.16)}
+  body.mode-bad .b2{background:rgba(11,65,207,.11)}
+  body.mode-bad .b3{background:rgba(194,75,38,.09)}
+  body.mode-good .b1{background:rgba(11,65,207,.16)}
+  body.mode-good .b2{background:rgba(61,108,240,.13)}
+  body.mode-good .b3{background:rgba(11,65,207,.08)}
   @media (max-width:680px){.hero-num{white-space:normal}}
 </style>
 </head>
 <body class="mode-bad">
+<div class="bgfx" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob lantern"></div></div>
 <div class="wrap">
 
   <div class="topline"><div class="who">disruptive.wtf</div></div>
@@ -174,18 +189,27 @@
             <stop offset="0%" stop-color="#C24B26" stop-opacity="0.04"/>
             <stop offset="100%" stop-color="#C24B26" stop-opacity="0.22"/>
           </linearGradient>
+          <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="7"/>
+          </filter>
         </defs>
         <g id="gGrid"></g>
         <path id="areaActive"></path>
         <g id="gMove"></g>
         <path id="ghostBad" fill="none" stroke="#C24B26" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"></path>
         <path id="ghostGood" fill="none" stroke="#0B41CF" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"></path>
+        <path id="glowBad" fill="none" stroke="#C24B26" stroke-width="11" stroke-linecap="round" filter="url(#glow)"></path>
+        <path id="glowGood" fill="none" stroke="#0B41CF" stroke-width="11" stroke-linecap="round" filter="url(#glow)"></path>
         <path id="actBad" fill="none" stroke="#C24B26" stroke-width="4.6" stroke-linecap="round"></path>
         <path id="actGood" fill="none" stroke="#0B41CF" stroke-width="4.6" stroke-linecap="round"></path>
         <g id="gTags">
           <text id="tagBad" class="curve-tag" fill="#A93D1C" text-anchor="start">unmanaged</text>
           <text id="tagGood" class="curve-tag" fill="#0B41CF" text-anchor="start">engaged</text>
         </g>
+        <circle id="troughHalo" r="7" fill="none" stroke-width="2.5">
+          <animate attributeName="r" values="7;17;7" dur="2.6s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" values="0.5;0;0.5" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
         <circle id="troughDot" r="6" stroke="#fff" stroke-width="2"></circle>
         <text id="troughLbl" class="trough-lbl" text-anchor="middle"></text>
         <text id="lblMoney" class="inchart-big" text-anchor="middle"></text>
@@ -202,7 +226,6 @@
         <div class="row"><span class="dot" style="background:var(--blue)"></span><span>engaged&nbsp;<b id="ttGoodP"></b>&nbsp;=&nbsp;<b id="ttGoodE"></b>&nbsp;this month</span></div>
         <div class="row delta"><span class="dot" style="background:var(--ink)"></span><span>difference&nbsp;<b id="ttDelta"></b>&nbsp;in this month</span></div>
       </div>
-      <div class="axis-note" id="axisNote"></div>
     </div>
   </div>
 
@@ -345,6 +368,23 @@
   var curMonthly=0, curBadCum=0, curGoodCum=0, curGap=0, inputsOk=false;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ambient field */
+  var blobs=[
+    {n:document.querySelector('.b1'), depth:30,  ax:46, ay:34, sx:0.055, sy:0.043, ph:0.0, fx:-0.18, fy:-0.24, fw:0.58, px:0, py:0},
+    {n:document.querySelector('.b2'), depth:-44, ax:38, ay:50, sx:0.047, sy:0.061, ph:2.1, fx:0.66, fy:0.14, fw:0.46, px:0, py:0},
+    {n:document.querySelector('.b3'), depth:55,  ax:54, ay:40, sx:0.039, sy:0.052, ph:4.2, fx:0.04, fy:0.58, fw:0.44, px:0, py:0}
+  ];
+  var lantern=document.querySelector('.lantern'), lwCache=0;
+  var mx=0,my=0,mxT=0,myT=0;
+  var cxT=-1e4,cyT=-1e4,lx=0,ly=0,pvx=-1e4,pvy=-1e4,energy=0;
+  if(reduceMotion && lantern) lantern.style.display='none';
+  window.addEventListener('resize',function(){ lwCache=0; },{passive:true});
+  window.addEventListener('pointermove',function(ev){
+    mxT=(ev.clientX/window.innerWidth)*2-1;
+    myT=(ev.clientY/window.innerHeight)*2-1;
+    cxT=ev.clientX; cyT=ev.clientY;
+  },{passive:true});
+
   function inputs(){
     var rev=parseFloat(el('inRev').value), emp=parseFloat(el('inEmp').value), scope=parseFloat(el('inScope').value);
     var ok = isFinite(rev)&&rev>0 && isFinite(emp)&&emp>0 && isFinite(scope)&&scope>0;
@@ -358,8 +398,7 @@
       ['sumYear','outPerEmp','outVal','outMonth','heroVal'].forEach(function(id){el(id).textContent='···';});
       ['eur90','eur100','eur105'].forEach(function(id){var n=el(id); if(n) n.textContent='';});
       el('lblMoney').textContent=''; el('lblMoneySub').textContent='';
-      el('troughLbl').textContent=''; el('troughDot').setAttribute('r','0');
-      el('axisNote').innerHTML='';
+      el('troughLbl').textContent=''; el('troughDot').setAttribute('r','0'); el('troughHalo').style.display='none';
       heroTarget=0; heroShown=0; curMonthly=0;
       return;
     }
@@ -377,8 +416,6 @@
     [90,100,105].forEach(function(p){
       el('eur'+p).textContent='\u20AC '+(monthly*p/100).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M/mo';
     });
-
-    el('axisNote').innerHTML='Monthly output of the <b>'+fmtEur.format(i.scope)+'</b>, as % of a normal month \u00B7 <b>100% = \u20AC '+(Math.round(monthly*10)/10).toLocaleString('de-AT',{minimumFractionDigits:1,maximumFractionDigits:1})+' M</b> per month \u00B7 <b>1% \u2248 \u20AC '+fmtEur.format(Math.round(monthly*1e6/100/1000)*1000)+'</b> per month';
 
     curBadCum=cumulative(BAD,monthly); curGoodCum=cumulative(GOOD,monthly);
     curGap=curGoodCum-curBadCum;
@@ -403,6 +440,10 @@
     el('actGood').setAttribute('d',d);
     el('actBad').setAttribute('stroke-opacity',(1-blend));
     el('actGood').setAttribute('stroke-opacity',blend);
+    el('glowBad').setAttribute('d',d);
+    el('glowGood').setAttribute('d',d);
+    el('glowBad').setAttribute('stroke-opacity',0.30*(1-blend));
+    el('glowGood').setAttribute('stroke-opacity',0.30*blend);
     var area=el('areaActive');
     area.setAttribute('d',bandPath(blend));
     area.setAttribute('fill', blend>0.5 ? 'url(#gBlue)' : 'url(#gEmber)');
@@ -416,6 +457,10 @@
       var dot=el('troughDot'), tl=el('troughLbl');
       dot.setAttribute('cx',X(tr.t)); dot.setAttribute('cy',Y(tr.p));
       dot.setAttribute('fill',col); dot.setAttribute('r','6');
+      var halo=el('troughHalo');
+      halo.setAttribute('cx',X(tr.t)); halo.setAttribute('cy',Y(tr.p));
+      halo.setAttribute('stroke',col);
+      halo.style.display = reduceMotion ? 'none' : '';
       tl.textContent=Math.round(tr.p)+'% \u00B7 month '+Math.round(tr.t);
       tl.setAttribute('x',X(tr.t)); tl.setAttribute('y',Y(tr.p)+24); tl.setAttribute('fill',col);
 
@@ -432,6 +477,44 @@
   }
 
   function frame(){
+    if(!reduceMotion){
+      var tnow=performance.now()/1000;
+      var W=window.innerWidth, H=window.innerHeight;
+      mx+=(mxT-mx)*0.045; my+=(myT-my)*0.045;
+
+      if(cxT>-1e3){
+        if(pvx<-1e3){ pvx=cxT; pvy=cyT; lx=cxT; ly=cyT; }
+        var sp=Math.hypot(cxT-pvx,cyT-pvy);
+        pvx=cxT; pvy=cyT;
+        energy+=(Math.min(sp,60)-energy)*0.08;
+      } else { energy*=0.97; }
+
+      var R=0.5*W;
+      for(var bi=0;bi<blobs.length;bi++){
+        var b=blobs[bi];
+        var tx2=0, ty2=0;
+        if(cxT>-1e3){
+          var bx=b.fx*W+b.fw*W/2, by=b.fy*H+b.fw*W/2;
+          var dx=bx-cxT, dy=by-cyT, dd=Math.hypot(dx,dy);
+          if(dd<R && dd>1){
+            var f=Math.pow(1-dd/R,2)*110;
+            tx2=dx/dd*f; ty2=dy/dd*f;
+          }
+        }
+        b.px+=(tx2-b.px)*0.05; b.py+=(ty2-b.py)*0.05;
+        var ox=Math.sin(tnow*b.sx+b.ph)*b.ax + mx*b.depth + b.px;
+        var oy=Math.cos(tnow*b.sy+b.ph)*b.ay + my*b.depth + b.py;
+        b.n.style.transform='translate3d('+ox.toFixed(1)+'px,'+oy.toFixed(1)+'px,0)';
+      }
+
+      if(lantern && cxT>-1e3){
+        lx+=(cxT-lx)*0.08; ly+=(cyT-ly)*0.08;
+        if(!lwCache) lwCache=lantern.offsetWidth;
+        var sc=1+(energy/60)*0.4;
+        lantern.style.transform='translate3d('+(lx-lwCache/2).toFixed(1)+'px,'+(ly-lwCache/2).toFixed(1)+'px,0) scale('+sc.toFixed(3)+')';
+        lantern.style.opacity=(0.55+(energy/60)*0.45).toFixed(3);
+      }
+    }
     var d=blendTgt-blend;
     if(Math.abs(d)>0.0015){
       blend += reduceMotion ? d : d*0.085;
