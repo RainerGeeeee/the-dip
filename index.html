@@ -55,7 +55,10 @@
   .seg button.act-bad{background:var(--brick);color:#fff;box-shadow:0 8px 26px rgba(194,75,38,.35)}
   .seg button.act-good{background:var(--blue);color:#fff;box-shadow:0 8px 26px rgba(11,65,207,.35)}
 
-  .panel{border:0;border-radius:20px;padding:clamp(18px,2.6vw,30px);box-shadow:0 18px 60px rgba(15,25,60,.08),0 2px 10px rgba(15,25,60,.05);background:#fff}
+  .panel{border-radius:20px;padding:clamp(18px,2.6vw,30px);background:#fff;border:1px solid rgba(255,255,255,.65);box-shadow:0 18px 60px rgba(15,25,60,.10),0 2px 10px rgba(15,25,60,.05),inset 0 1px 0 rgba(255,255,255,.85)}
+  @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .panel{background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(36px) saturate(1.5);backdrop-filter:blur(36px) saturate(1.5)}
+  }
   .hero-label{font-size:13px;font-weight:700;letter-spacing:.03em;color:var(--grey)}
   .hero-num{font-weight:800;font-size:clamp(38px,5.6vw,74px);line-height:1.08;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .35s}
   body.mode-bad .hero-num{color:var(--brick-dark);background:linear-gradient(105deg,#8F2F12,#C24B26 55%,#E0703F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -99,24 +102,33 @@
   .endnote{margin-top:12px;font-size:11.5px;color:var(--faint)}
   .wrap{position:relative;z-index:1}
   .bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .blob{position:absolute;border-radius:50%;filter:blur(110px);will-change:transform;transition:background 1.6s ease}
-  .b1{width:58vw;height:58vw;left:-18vw;top:-24vh}
-  .b2{width:46vw;height:46vw;left:66vw;top:14vh}
-  .b3{width:44vw;height:44vw;left:4vw;top:58vh}
-  .lantern{left:0;top:0;width:32vw;height:32vw;filter:blur(95px);opacity:.55}
-  body.mode-bad .lantern{background:rgba(194,75,38,.22)}
-  body.mode-good .lantern{background:rgba(11,65,207,.22)}
-  body.mode-bad .b1{background:rgba(194,75,38,.16)}
-  body.mode-bad .b2{background:rgba(11,65,207,.11)}
-  body.mode-bad .b3{background:rgba(194,75,38,.09)}
-  body.mode-good .b1{background:rgba(11,65,207,.16)}
-  body.mode-good .b2{background:rgba(61,108,240,.13)}
-  body.mode-good .b3{background:rgba(11,65,207,.08)}
+  @property --ca{syntax:'<color>';inherits:false;initial-value:rgba(0,0,0,0)}
+  @property --cb{syntax:'<color>';inherits:false;initial-value:rgba(0,0,0,0)}
+  .blob{position:absolute;will-change:transform;background:linear-gradient(130deg,var(--ca),var(--cb) 75%);transition:--ca 1.6s ease,--cb 1.6s ease}
+  .b1,.b2,.b3{filter:blur(110px);mix-blend-mode:multiply}
+  .b1{width:58vw;height:58vw;left:-18vw;top:-24vh;animation:morphA 24s ease-in-out infinite alternate}
+  .b2{width:46vw;height:46vw;left:66vw;top:14vh;animation:morphB 30s ease-in-out infinite alternate}
+  .b3{width:44vw;height:44vw;left:4vw;top:58vh;animation:morphC 20s ease-in-out infinite alternate}
+  .lantern{left:0;top:0;width:32vw;height:32vw;filter:blur(90px);opacity:.55;animation:morphL 12s ease-in-out infinite alternate}
+  .glint{position:absolute;left:0;top:0;width:13vw;height:13vw;border-radius:50%;filter:blur(28px);background:radial-gradient(circle at 38% 35%,rgba(255,255,255,.9),rgba(255,255,255,0) 62%);opacity:0;will-change:transform,opacity;pointer-events:none}
+  body.mode-bad .b1{--ca:rgba(194,75,38,.27);--cb:rgba(224,112,63,.09)}
+  body.mode-bad .b2{--ca:rgba(11,65,207,.18);--cb:rgba(108,77,240,.08)}
+  body.mode-bad .b3{--ca:rgba(216,106,63,.16);--cb:rgba(194,75,38,.06)}
+  body.mode-bad .lantern{--ca:rgba(194,75,38,.30);--cb:rgba(255,138,76,.13)}
+  body.mode-good .b1{--ca:rgba(11,65,207,.25);--cb:rgba(108,77,240,.09)}
+  body.mode-good .b2{--ca:rgba(61,108,240,.19);--cb:rgba(11,160,207,.08)}
+  body.mode-good .b3{--ca:rgba(11,65,207,.14);--cb:rgba(108,77,240,.07)}
+  body.mode-good .lantern{--ca:rgba(11,65,207,.30);--cb:rgba(96,140,255,.14)}
+  @keyframes morphA{0%{border-radius:46% 54% 58% 42%/52% 44% 56% 48%}50%{border-radius:58% 42% 44% 56%/42% 58% 46% 54%}100%{border-radius:42% 58% 52% 48%/56% 42% 58% 44%}}
+  @keyframes morphB{0%{border-radius:55% 45% 48% 52%/45% 58% 42% 55%}50%{border-radius:44% 56% 58% 42%/56% 44% 54% 46%}100%{border-radius:58% 42% 46% 54%/44% 56% 42% 58%}}
+  @keyframes morphC{0%{border-radius:50% 50% 44% 56%/56% 46% 54% 44%}50%{border-radius:42% 58% 56% 44%/46% 56% 42% 58%}100%{border-radius:56% 44% 50% 50%/54% 44% 58% 42%}}
+  @keyframes morphL{0%{border-radius:48% 52% 55% 45%/50% 47% 53% 50%}100%{border-radius:55% 45% 47% 53%/46% 55% 45% 54%}}
+  @media (prefers-reduced-motion: reduce){.b1,.b2,.b3,.lantern{animation:none}}
   @media (max-width:680px){.hero-num{white-space:normal}}
 </style>
 </head>
 <body class="mode-bad">
-<div class="bgfx" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob lantern"></div></div>
+<div class="bgfx" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob lantern"></div><div class="glint" aria-hidden="true"></div></div>
 <div class="wrap">
 
   <div class="topline"><div class="who">disruptive.wtf</div></div>
@@ -370,15 +382,16 @@
 
   /* ambient field */
   var blobs=[
-    {n:document.querySelector('.b1'), depth:30,  ax:46, ay:34, sx:0.055, sy:0.043, ph:0.0, fx:-0.18, fy:-0.24, fw:0.58, px:0, py:0},
-    {n:document.querySelector('.b2'), depth:-44, ax:38, ay:50, sx:0.047, sy:0.061, ph:2.1, fx:0.66, fy:0.14, fw:0.46, px:0, py:0},
-    {n:document.querySelector('.b3'), depth:55,  ax:54, ay:40, sx:0.039, sy:0.052, ph:4.2, fx:0.04, fy:0.58, fw:0.44, px:0, py:0}
+    {n:document.querySelector('.b1'), depth:30,  ax:46, ay:34, sx:0.055, sy:0.043, ph:0.0, fx:-0.18, fy:-0.24, fw:0.58, px:0, py:0, rs:2.6},
+    {n:document.querySelector('.b2'), depth:-44, ax:38, ay:50, sx:0.047, sy:0.061, ph:2.1, fx:0.66, fy:0.14, fw:0.46, px:0, py:0, rs:-2.1},
+    {n:document.querySelector('.b3'), depth:55,  ax:54, ay:40, sx:0.039, sy:0.052, ph:4.2, fx:0.04, fy:0.58, fw:0.44, px:0, py:0, rs:3.1}
   ];
   var lantern=document.querySelector('.lantern'), lwCache=0;
+  var glint=document.querySelector('.glint'), glwCache=0, glx=0, gly=0;
   var mx=0,my=0,mxT=0,myT=0;
   var cxT=-1e4,cyT=-1e4,lx=0,ly=0,pvx=-1e4,pvy=-1e4,energy=0;
-  if(reduceMotion && lantern) lantern.style.display='none';
-  window.addEventListener('resize',function(){ lwCache=0; },{passive:true});
+  if(reduceMotion){ if(lantern) lantern.style.display='none'; if(glint) glint.style.display='none'; }
+  window.addEventListener('resize',function(){ lwCache=0; glwCache=0; },{passive:true});
   window.addEventListener('pointermove',function(ev){
     mxT=(ev.clientX/window.innerWidth)*2-1;
     myT=(ev.clientY/window.innerHeight)*2-1;
@@ -504,15 +517,23 @@
         b.px+=(tx2-b.px)*0.05; b.py+=(ty2-b.py)*0.05;
         var ox=Math.sin(tnow*b.sx+b.ph)*b.ax + mx*b.depth + b.px;
         var oy=Math.cos(tnow*b.sy+b.ph)*b.ay + my*b.depth + b.py;
-        b.n.style.transform='translate3d('+ox.toFixed(1)+'px,'+oy.toFixed(1)+'px,0)';
+        b.n.style.transform='translate3d('+ox.toFixed(1)+'px,'+oy.toFixed(1)+'px,0) rotate('+((tnow*b.rs)%360).toFixed(2)+'deg)';
       }
 
       if(lantern && cxT>-1e3){
         lx+=(cxT-lx)*0.08; ly+=(cyT-ly)*0.08;
         if(!lwCache) lwCache=lantern.offsetWidth;
         var sc=1+(energy/60)*0.4;
-        lantern.style.transform='translate3d('+(lx-lwCache/2).toFixed(1)+'px,'+(ly-lwCache/2).toFixed(1)+'px,0) scale('+sc.toFixed(3)+')';
+        lantern.style.transform='translate3d('+(lx-lwCache/2).toFixed(1)+'px,'+(ly-lwCache/2).toFixed(1)+'px,0) rotate('+((tnow*5)%360).toFixed(2)+'deg) scale('+sc.toFixed(3)+')';
         lantern.style.opacity=(0.55+(energy/60)*0.45).toFixed(3);
+        if(glint){
+          if(!glwCache) glwCache=glint.offsetWidth;
+          var gx=lx-lwCache*0.16, gy=ly-lwCache*0.20;
+          glx+=(gx-glx)*0.10; gly+=(gy-gly)*0.10;
+          var gsc=1+(energy/60)*0.3;
+          glint.style.transform='translate3d('+(glx-glwCache/2).toFixed(1)+'px,'+(gly-glwCache/2).toFixed(1)+'px,0) scale('+gsc.toFixed(3)+')';
+          glint.style.opacity=(0.25+(energy/60)*0.45).toFixed(3);
+        }
       }
     }
     var d=blendTgt-blend;
